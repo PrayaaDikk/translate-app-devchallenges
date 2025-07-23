@@ -26,7 +26,7 @@ const TranslatingForm = () => {
                 <footer className="flex items-center justify-between">
                     <ActionBtn />
                     <button type="button" className="px-4 py-2 text-whiteTHeme bg-blueTheme border border-lightBlueTheme rounded-xl flex items-center gap-1 text-whiteTheme font-bold">
-                        <img src="/Sort_alfa.svg" alt="sort-alfa" className="size-[20px]" />
+                        <img src="./Sort_alfa.svg" alt="sort-alfa" className="size-[20px]" />
                         <p className="text-base">Translate</p>
                     </button>
                 </footer>
