@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+    --color-gray1: #4D5562;
+    --color-gray2: #394150;
+    --color-background-form1: #212936CC;
+    --color-background-form2: #121826CC;
+    --color-whiteTheme: #F9FAFB;
+    --color-text: #D2D5DA;
+    --color-blueTheme: #263FA9;
+    --color-lightBlueTheme: #7CA9F3;
+
+    --font-dm-sans: "DM Sans", sans-serif;
+}
+
+@layer base {
+    body {
+        @apply font-dm-sans
+    }
+
+    textarea {
+        @apply focus:outline-0
+    }
+}
