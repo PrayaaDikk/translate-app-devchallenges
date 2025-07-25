@@ -1,7 +1,7 @@
 const ActionBtn = () => {
     return (
         <div className="flex items-center gap-4">
-            <div className="p-2 outline-2 outline-gray1 rounded-xl">
+            <div className="p-2 outline-2 outline-gray1 rounded-xl cursor-pointer">
                 <svg
                     width="20"
                     height="20"
@@ -27,7 +27,7 @@ const ActionBtn = () => {
                     />
                 </svg>
             </div>
-            <div className="p-2 outline-2 outline-gray1 rounded-xl">
+            <div className="p-2 outline-2 outline-gray1 rounded-xl cursor-pointer">
                 <svg
                     width="20"
                     height="20"

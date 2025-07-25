@@ -1,18 +1,52 @@
+import { useEffect, useState } from "react";
+import { useLanguage } from "../hooks/useLanguage";
+import { LANGUAGE_LIST } from "../constants";
+import TranslatedRadioList from "./TranslatedRadioList";
 import ActionBtn from "./ui/ActionBtn";
+import axios from "axios";
 
-const TranslatedForm = () => {
+type TranslatedFormProps = {
+    translatedText: string;
+}
+
+const TranslatedForm = ({ translatedText }: TranslatedFormProps) => {
+    const { selectedLangCodeFrom, selectedLangCodeTarget, setSelectedLangCodeFrom, setSelectedLangCodeTarget } = useLanguage();
+    const [translateResults, setTranslateResults] = useState("");
+
+    const handleSwapLanguages = () => {
+        setSelectedLangCodeFrom(selectedLangCodeTarget);
+        setSelectedLangCodeTarget(selectedLangCodeFrom);
+    };
+
+    useEffect(() => {
+        const fetchTranslation = async () => {
+            if (selectedLangCodeFrom && selectedLangCodeTarget && translatedText) {
+                try {
+                    const response = await axios.get('/api/get', {
+                        params: {
+                            q: translatedText,
+                            langpair: `${selectedLangCodeFrom}|${selectedLangCodeTarget}`
+                        }
+                    });
+                    setTranslateResults(response.data.responseData.translatedText);
+                } catch (error) {
+                    console.error("Error fetching translation:", error);
+                }
+            }
+        };
+
+        fetchTranslation();
+
+    }, [selectedLangCodeFrom, selectedLangCodeTarget, translatedText]);
+
     return (
-        <div className="border border-gray1 rounded-4xl bg-background-form2 p-6 text-sm">
-            <div className="space-y-4">
+        <div className="border border-gray1 rounded-4xl bg-background-form2 p-6 text-sm h-full">
+            <div className="flex flex-col h-full space-y-4">
                 <header className="flex items-center justify-between text-text font-bold">
                     <div className="flex items-center gap-2 *:p-3">
-                        <p>English</p>
-                        <p className="text-whiteTheme bg-gray1 rounded-2xl">
-                            French
-                        </p>
-                        <p>Spanish</p>
+                        <TranslatedRadioList languagesList={LANGUAGE_LIST} />
                     </div>
-                    <div className="outline-2 outline-gray1 p-2 rounded-xl">
+                    <button type="button" onClick={handleSwapLanguages} className="outline-2 outline-gray1 p-2 rounded-xl cursor-pointer">
                         <svg
                             width="16"
                             height="16"
@@ -29,18 +63,14 @@ const TranslatedForm = () => {
                                 fill="#4D5562"
                             />
                         </svg>
-                    </div>
+                    </button>
                 </header>
                 <div className="block h-[1px] bg-gray2"></div>
-                <textarea
-                    name="translation-text"
-                    id="translation-text"
-                    rows={8}
-                    className="text-whiteTheme font-bold mt-2 text-base w-full resize-none"
-                    maxLength={500}
-                    defaultValue={"Bonjour, comment allez-vous?"}
-                ></textarea>
-                <ActionBtn />
+                <div className="flex flex-col justify-between h-full flex-1">
+                    <textarea name="translated-text" id="translated-text" value={translateResults} className="text-whiteTheme font-bold mt-2 text-base w-full resize-none block" maxLength={500} rows={5} disabled>
+                    </textarea>
+                    <ActionBtn />
+                </div>
             </div>
         </div>
     );
