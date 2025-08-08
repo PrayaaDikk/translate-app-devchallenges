@@ -8,7 +8,7 @@ const TranslatingForm = () => {
     const { textToTranslate, setTextToTranslate } = useTranslate();
 
     return (
-        <section className="bg-bg1wop border-darkGray1 h-full rounded-4xl border p-6 font-bold">
+        <section className="bg-bg2wop border-darkGray1 h-full rounded-4xl border p-6 font-bold">
             <main className="flex h-full flex-col space-y-6 [&>form]:flex-1">
                 <FormHeader languageList={LANGUAGE_LIST} isTranslatingForm />
                 <div className="bg-gray bg-darkGray1 h-[1px]"></div>
